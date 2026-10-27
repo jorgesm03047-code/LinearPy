@@ -43,7 +43,7 @@ export function InicioModule({ onNavigate }: { onNavigate: (route: RouteId) => v
     <div className="home">
       <div className="home-intro">
         <div className="eyebrow">
-          FCC / BUAP <span>·</span> Laboratorio de álgebra lineal
+          Proyecto educativo independiente <span>·</span> Laboratorio de álgebra lineal
         </div>
         <h1>
           Las matemáticas

@@ -169,7 +169,7 @@ export const Header: React.FC<{
               height="40"
             />
           </div>
-          <small>Facultad de Ciencias de la Computación</small>
+          <small>Referencia visual del contexto académico</small>
         </div>
       </aside>
     </>

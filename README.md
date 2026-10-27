@@ -1,72 +1,46 @@
 # LinearPy
 
-Laboratorio interactivo de Álgebra Lineal y Geometría Analítica para estudiantes y docentes de la Facultad de Ciencias de la Computación de la BUAP. Creado por Jorge David Santos Marquez.
+**Explora el álgebra lineal paso a paso.** LinearPy es un laboratorio web interactivo para visualizar conceptos, resolver ejercicios y entender el razonamiento que conecta cada operación.
 
-La interfaz funciona en móvil, tablet y PC. Cada capítulo combina un editor, resultados y procedimientos desplegables. La portada permite explorar una transformación geométrica antes de entrar a los ejercicios.
+[Abrir LinearPy](https://linearpy.jorgesm03047.workers.dev) · [Ver condiciones de uso](TERMINOS-DE-USO.md)
 
-## Vista previa
+![Editor de LinearPy en PC](docs/previews/desktop.jpg)
 
-![Editor y resultados en PC](docs/previews/desktop.jpg)
+[Ver la experiencia móvil](docs/previews/mobile.png)
 
-[Vista móvil de los resultados](docs/previews/mobile.png)
+## Explora
 
-## Capítulos
+- **Vectores y geometría:** normas, productos, ángulos, rectas, planos y una escena 3D que puedes explorar con ratón, tacto o teclado.
+- **Matrices y sistemas:** determinantes, inversas, eliminación de Gauss-Jordan, clasificación de sistemas e independencia lineal.
+- **Transformaciones lineales:** núcleo, imagen, rango, nulidad y visualización 2D de rotaciones, escalas, cizallamientos y reflexiones.
+- **Diagonalización:** polinomio característico, autovalores, espacios propios y factorización cuando se puede calcular exactamente.
+- **Biblioteca:** recursos audiovisuales organizados por tema.
 
-- Vectores y geometría: normas, producto punto, ángulos, producto cruz, unitarios, rectas, planos y laboratorio 3D con ratón, tacto o teclado.
-- Matrices y sistemas: determinantes, inversas, Gauss-Jordan, clasificación de sistemas e independencia lineal. Incluye navegación por flechas y pegado de celdas tabuladas.
-- Transformaciones lineales: núcleo, imagen, rango, nulidad y laboratorio 2D de rotación, escala, cizallamiento y reflexión.
-- Diagonalización: polinomio característico, raíces, espacios propios y factorización exacta cuando los autovalores son racionales.
-- Biblioteca: recursos audiovisuales organizados por capítulo.
+En cada espacio puedes editar los datos, revisar el resultado y desplegar el procedimiento a tu ritmo. La interfaz se adapta a teléfonos, tabletas y computadoras. Los editores aceptan fracciones exactas y pegado de celdas desde una hoja de cálculo.
 
-## Ejecutar
+## Comparte y continúa
 
-Requiere Node.js 24 y npm.
+Los ejercicios se pueden compartir mediante un enlace o un código QR. Los borradores se guardan en el almacenamiento local del navegador; no hay cuentas de estudiantes ni una base de datos que recoja sus ejercicios.
+
+## Precisión
+
+El motor conserva fracciones exactas y ciertos radicales. Cuando una operación usa aproximaciones —como algunos ángulos, representaciones geométricas o raíces de polinomios— la interfaz las identifica. La diagonalización exacta se limita a casos con autovalores racionales calculables por el motor; alcanzar un límite de búsqueda no demuestra que una raíz sea irracional.
+
+## Condiciones de uso e identidad visual
+
+LinearPy es un proyecto educativo independiente. Las imágenes de BUAP y FCC se incluyen solo como referencia visual del contexto académico: el sitio no representa a esas instituciones ni implica su afiliación, aval o respaldo. Las marcas y logotipos pertenecen a sus titulares. Este aviso no sustituye las autorizaciones que pudieran requerirse para usar la identidad gráfica institucional; consulta el [Manual de Identidad Gráfica de BUAP](https://comunicacion.buap.mx/sites/default/files/IdentidadGrafica/manual-identidad-buap.pdf). Los resultados son material de apoyo y conviene verificarlos antes de usarlos en una entrega.
+
+Lee las [condiciones breves de uso](TERMINOS-DE-USO.md).
+
+## Proyecto
+
+LinearPy fue creado por Jorge David Santos Marquez. El código fuente está disponible bajo licencia MIT; los logotipos y demás marcas institucionales no forman parte de esa licencia.
+
+Para ejecutar una copia de desarrollo se requiere Node.js 24 o superior:
 
 ```bash
 npm ci
 npm run dev
 ```
 
-Abre la dirección local indicada por Vite, normalmente `http://localhost:5173`.
-
-```bash
-npm test
-npm run build
-npm run preview
-npm run format:check
-npm run check:comments
-```
-
-## Exactitud y límites
-
-El motor algebraico utiliza fracciones exactas con `BigInt` y conserva radicales exactos. Los ángulos, el laboratorio 2D, las escenas geométricas y las raíces numéricas usan aproximaciones identificadas en la interfaz. Las matrices admiten de 2 a 5 filas y columnas; en sistemas, la última columna es el término independiente. La entrada de cada celda está limitada a 32 caracteres.
-
-La diagonalización construye P y D únicamente para un espectro racional completo. Las raíces cuadráticas restantes se muestran en forma exacta; para factores de mayor grado se muestran aproximaciones. La búsqueda de divisores y la simplificación de radicales tienen límites de trabajo para evitar bloquear el navegador con números grandes. Alcanzar un límite no demuestra que una raíz sea irracional. La factorización disponible verifica exactamente P D P⁻¹ = A.
-
-## Ejercicios compartidos y borradores
-
-El botón Compartir genera un enlace y un código QR con los datos y la operación seleccionada. Los enlaces nuevos incluyen una versión de esquema; se aceptan enlaces anteriores con una estructura válida. Los datos recibidos se validan antes de usarse. Los cambios actualizan la URL sin recargar, incluidos los cambios dentro del mismo capítulo.
-
-Los borradores se guardan en el almacenamiento local del navegador. No se envían a un servidor. Si el navegador bloquea el almacenamiento, el ejercicio sigue funcionando y puede compartirse por enlace. No hay cuentas de alumno ni base de datos.
-
-## Estructura
-
-```text
-src/core/          Motor matemático, validación y enlaces
-src/components/    Controles, procedimientos, navegación y escenas
-src/modules/       Los capítulos y la biblioteca
-src/styles/        Sistema visual y adaptación de pantallas
-tests/             Pruebas de regresión
-public/brand/      Identidad institucional
-legacy/python/    Versión anterior en Streamlit, preservada como referencia
-```
-
-La biblioteca externa de referencias de diseño está fuera del repositorio de la aplicación. `DESIGN.md` contiene la dirección específica de LinearPy y `AGENTS.md` establece las convenciones del código, incluidos comentarios en formato oración y sin separadores decorativos.
-
-## Despliegue
-
-El resultado de `npm run build` se genera en `dist`. Puede alojarse como sitio estático en Cloudflare Pages con comando de compilación `npm run build`, directorio `dist` y Node.js 24. Los capítulos se cargan bajo demanda; Three.js se descarga al abrir el laboratorio 3D. El alojamiento se configura por separado de este repositorio.
-
-## Licencia
-
-MIT. Copyright © 2026 Jorge David Santos Marquez. Los logotipos institucionales identifican el contexto académico del proyecto; no implican una declaración de aval institucional.
+El comando `npm run build` genera el sitio en `dist`. Las comprobaciones del proyecto están disponibles con `npm test`, `npm run format:check` y `npm run check:comments`.
