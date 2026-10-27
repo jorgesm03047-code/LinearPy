@@ -1,5 +1,0 @@
-streamlit
-sympy
-plotly
-matplotlib
-numpy
