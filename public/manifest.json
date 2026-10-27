@@ -1,0 +1,17 @@
+{
+  "name": "LinearPy · Tutor de Álgebra Lineal",
+  "short_name": "LinearPy",
+  "description": "Tutor interactivo de Álgebra Lineal y Geometría Analítica con procedimientos paso a paso - FCC BUAP",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#eef3f6",
+  "icons": [
+    {
+      "src": "/brand/fcc-logo.png",
+      "sizes": "192x192 512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

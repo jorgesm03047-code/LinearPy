@@ -1,0 +1,61 @@
+/* Define la identidad visual y las medidas compartidas. */
+:root {
+  --white: #fff;
+  --black: #18232b;
+  --navy: #145779;
+  --orange: #dc8307;
+  --navy-900: #1c3443;
+  --navy-700: #145779;
+  --navy-500: #52768c;
+  --navy-300: #8da6b5;
+  --navy-100: #e0eaf0;
+  --navy-50: #f4f7f9;
+  --orange-ink: #8b5100;
+  --orange-100: #f8e8cf;
+  --orange-50: #fff8ed;
+  --ink: #23323d;
+  --ink-soft: #52636f;
+  --ink-muted: #526572;
+  --line: #e4e9ed;
+  --surface: #fff;
+  --surface-alt: #f4f7f9;
+  --frame: #eef3f6;
+  --danger: #ac3029;
+  --danger-bg: #fff2f0;
+  --font-sans: 'IBM Plex Sans', system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-md: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.75rem;
+  --text-hero: 2.5rem;
+  --s-1: 4px;
+  --s-2: 8px;
+  --s-3: 12px;
+  --s-4: 16px;
+  --s-5: 20px;
+  --s-6: 24px;
+  --s-8: 32px;
+  --s-10: 40px;
+  --s-12: 48px;
+  --s-16: 64px;
+  --radius-sm: 6px;
+  --radius: 10px;
+  --radius-lg: 16px;
+  --shadow-sm: none;
+  --shadow: none;
+  --shadow-lg: 0 20px 80px #152d4333;
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --fast: 140ms;
+  --normal: 240ms;
+  --sidebar-width: 228px;
+  --content-width: 1440px;
+}
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --fast: 0ms;
+    --normal: 0ms;
+  }
+}

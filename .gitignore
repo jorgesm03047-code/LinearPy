@@ -1,0 +1,21 @@
+# Dependencias y compilados
+node_modules/
+dist/
+*.tsbuildinfo
+
+# Restos de la versión anterior en Python
+__pycache__/
+*.pyc
+.streamlit/
+
+# Sistema y editores
+.DS_Store
+.vscode/
+.idea/
+
+# Variables de entorno locales
+.env
+.env.*
+
+# Cloudflare Wrangler
+.wrangler/
