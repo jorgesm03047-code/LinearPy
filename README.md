@@ -1,8 +1,10 @@
 # LinearPy
 
+**[Abrir LinearPy →](https://linearpy.jorgesm03047.workers.dev)**
+
 **Explora el álgebra lineal paso a paso.** LinearPy es un laboratorio web interactivo para visualizar conceptos, resolver ejercicios y entender el razonamiento que conecta cada operación.
 
-[Abrir LinearPy](https://linearpy.jorgesm03047.workers.dev) · [Ver condiciones de uso](TERMINOS-DE-USO.md)
+[Ver condiciones de uso](TERMINOS-DE-USO.md)
 
 ![Editor de LinearPy en PC](docs/previews/desktop.jpg)
 
