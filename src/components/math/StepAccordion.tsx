@@ -69,7 +69,12 @@ export function StepAccordion({
   const [expanded, setExpanded] = useState<boolean | null>(null);
   if (!steps.length) return null;
   return (
-    <section className="procedure">
+    <section
+      className="procedure"
+      data-pdf-steps={JSON.stringify(
+        steps.map(({ title, detail, math }) => ({ title, detail, math })),
+      )}
+    >
       <div className="procedure-heading">
         <h2>{title}</h2>
         <button

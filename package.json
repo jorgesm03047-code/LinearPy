@@ -1,7 +1,7 @@
 {
   "name": "linearpy",
   "private": true,
-  "version": "3.0.0",
+  "version": "3.1.0",
   "description": "Tutor interactivo de Álgebra Lineal y Geometría Analítica con procedimientos paso a paso.",
   "author": "Jorge David Santos Marquez",
   "license": "MIT",
@@ -17,6 +17,8 @@
     "check:comments": "node scripts/check-comments.mjs"
   },
   "dependencies": {
+    "html2canvas": "^1.4.1",
+    "jspdf": "^4.2.1",
     "katex": "^0.19.1",
     "qrcode": "^1.5.4",
     "react": "^19.3.1",
@@ -30,6 +32,7 @@
     "@types/react-dom": "^19.3.0",
     "@types/three": "^0.186.0",
     "@vitejs/plugin-react": "^6.1.2",
+    "happy-dom": "^21.0.4",
     "prettier": "^3.9.10",
     "typescript": "^7.0.2",
     "vite": "^8.3.5",

@@ -1768,3 +1768,35 @@ body {
     font-size: 11px;
   }
 }
+
+.exercise-export {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 0 0 18px;
+}
+.exercise-export > span,
+.export-message {
+  color: var(--ink-muted);
+  font-size: 12px;
+}
+.export-message {
+  margin: 0 0 16px;
+}
+.exercise-export button:disabled {
+  cursor: wait;
+  opacity: 0.65;
+}
+@media (max-width: 760px) {
+  .exercise-export > span {
+    flex: 1 1 100%;
+  }
+}
+@media print {
+  .exercise-export,
+  .export-message {
+    display: none;
+  }
+}

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Latex } from '../math/Latex';
 import { Rational } from '../../core/rational';
 
@@ -135,13 +135,72 @@ export function VectorInput({
 
 export function Workbench({ children }: { children: React.ReactNode }) {
   const [view, setView] = useState<'editor' | 'result'>('editor');
+  const [exporting, setExporting] = useState(false);
+  const [exportProgress, setExportProgress] = useState(0);
+  const [exportMessage, setExportMessage] = useState('');
+  const [downloadUrl, setDownloadUrl] = useState('');
+  const downloadRef = useRef('');
+  useEffect(
+    () => () => {
+      if (downloadRef.current) URL.revokeObjectURL(downloadRef.current);
+    },
+    [],
+  );
   const root = useRef<HTMLDivElement>(null);
+  const exportPdf = async () => {
+    if (!root.current || exporting) return;
+    setExporting(true);
+    setExportProgress(0);
+    setExportMessage('');
+    setDownloadUrl('');
+    if (downloadRef.current) URL.revokeObjectURL(downloadRef.current);
+    downloadRef.current = '';
+    try {
+      const { exportExercisePdf } = await import('../export/exportPdf');
+      const file = await exportExercisePdf(root.current, setExportProgress);
+      if (!root.current) return;
+      const url = URL.createObjectURL(file.blob);
+      downloadRef.current = url;
+      setDownloadUrl(url);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = file.filename;
+      document.body.append(link);
+      link.click();
+      link.remove();
+      setExportMessage('PDF preparado. Revisa tus descargas o usa el enlace para abrirlo.');
+    } catch (error) {
+      setExportMessage(
+        error instanceof Error && error.message.startsWith('Completa')
+          ? error.message
+          : 'No pudimos generar el PDF. Intenta de nuevo con un ejercicio más pequeño.',
+      );
+    } finally {
+      setExporting(false);
+    }
+  };
   const switchView = (next: 'editor' | 'result') => {
     setView(next);
     root.current?.scrollIntoView({ block: 'start', behavior: 'instant' });
   };
   return (
     <div className="workbench-shell" data-view={view} ref={root}>
+      <div className="exercise-export">
+        <span>Guarda los datos, el resultado y todos los pasos.</span>
+        <button type="button" className="btn btn-outline" disabled={exporting} onClick={exportPdf}>
+          {exporting ? `Preparando PDF… ${exportProgress}%` : 'Descargar PDF'}
+        </button>
+      </div>
+      {exportMessage && (
+        <p className="export-message" role="status">
+          {exportMessage}{' '}
+          {downloadUrl && (
+            <a href={downloadUrl} target="_blank" rel="noreferrer">
+              Abrir PDF
+            </a>
+          )}
+        </p>
+      )}
       <div className="mobile-view-controls" role="group" aria-label="Vista del ejercicio">
         <button type="button" aria-pressed={view === 'editor'} onClick={() => switchView('editor')}>
           Datos del ejercicio

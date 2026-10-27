@@ -24,6 +24,8 @@ En cada espacio puedes editar los datos, revisar el resultado y desplegar el pro
 
 Los ejercicios se pueden compartir mediante un enlace o un código QR. Los borradores se guardan en el almacenamiento local del navegador; no hay cuentas de estudiantes ni una base de datos que recoja sus ejercicios.
 
+El botón **Descargar PDF** guarda los datos actuales, el resultado y el procedimiento completo, incluidos los pasos cerrados en pantalla. El documento contiene un enlace para volver al ejercicio. Puedes descargarlo o abrirlo en el visor de tu navegador para compartirlo desde el móvil. La escena 3D se consulta mediante el enlace interactivo.
+
 ## Precisión
 
 El motor conserva fracciones exactas y ciertos radicales. Cuando una operación usa aproximaciones —como algunos ángulos, representaciones geométricas o raíces de polinomios— la interfaz las identifica. La diagonalización exacta se limita a casos con autovalores racionales calculables por el motor; alcanzar un límite de búsqueda no demuestra que una raíz sea irracional.
