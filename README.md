@@ -38,7 +38,7 @@ Lee las [condiciones breves de uso](TERMINOS-DE-USO.md).
 
 ## Proyecto
 
-LinearPy fue creado por Jorge David Santos Marquez. El código fuente está disponible bajo licencia MIT; los logotipos y demás marcas institucionales no forman parte de esa licencia.
+LinearPy fue creado por Jorge David Santos Marquez. El código y la documentación propios se ofrecen bajo la [Licencia de uso público no comercial](LICENSE): puedes usarlos, modificarlos y compartirlos con atribución para fines no comerciales. El uso comercial requiere autorización previa y por escrito. Las dependencias, marcas y logotipos de terceros no forman parte de esta licencia.
 
 Para ejecutar una copia de desarrollo se requiere Node.js 24 o superior:
 

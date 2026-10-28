@@ -1,21 +1,33 @@
-MIT License
+Licencia de uso público no comercial de LinearPy, versión 1.0
 
 Copyright (c) 2026 Jorge David Santos Marquez
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+Esta licencia se aplica al código fuente y a la documentación de LinearPy que
+sean propiedad del titular indicado arriba. No se aplica a dependencias de
+terceros, contenidos identificados como pertenecientes a otras personas o
+entidades, marcas ni logotipos.
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+Se concede permiso para usar, copiar, modificar y redistribuir el material
+cubierto por esta licencia únicamente con fines no comerciales, siempre que
+se conserven este aviso de copyright y el texto completo de esta licencia en
+toda copia o redistribución sustancial.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+Para esta licencia, se considera uso comercial cualquier uso dirigido
+principalmente a obtener una ventaja comercial o una compensación económica.
+Esto incluye vender el material, ofrecer acceso pagado a él o incorporarlo en
+un producto o servicio comercial. Cualquier uso comercial requiere autorización
+previa y por escrito del titular de los derechos.
+
+Al redistribuir una versión modificada, debe indicarse claramente que fue
+modificada y conservarse la atribución a Jorge David Santos Marquez como autor
+del proyecto original. Esta atribución no debe sugerir que el titular respalda
+la versión modificada.
+
+El material se ofrece «tal cual», sin garantías expresas o implícitas, incluidas
+las garantías de comerciabilidad, idoneidad para un propósito particular y no
+infracción. En ningún caso el titular será responsable por reclamaciones, daños
+u otras responsabilidades derivadas del material o de su uso.
+
+Esta licencia no concede derechos sobre nombres, marcas, logotipos ni otros
+elementos de identidad visual. Los componentes de terceros permanecen sujetos
+a sus propias licencias.

@@ -4,7 +4,7 @@
   "version": "3.1.0",
   "description": "Tutor interactivo de Álgebra Lineal y Geometría Analítica con procedimientos paso a paso.",
   "author": "Jorge David Santos Marquez",
-  "license": "MIT",
+  "license": "SEE LICENSE IN LICENSE",
   "type": "module",
   "scripts": {
     "dev": "vite",

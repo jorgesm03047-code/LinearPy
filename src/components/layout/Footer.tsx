@@ -3,7 +3,7 @@ export function Footer() {
     <footer className="site-footer">
       <div className="site-footer-meta">
         <span>LinearPy · Proyecto educativo independiente</span>
-        <span>Jorge David Santos Marquez · Licencia MIT</span>
+        <span>Jorge David Santos Marquez · Uso no comercial</span>
       </div>
       <details className="site-footer-terms">
         <summary>Condiciones de uso e identidad visual</summary>
@@ -26,7 +26,11 @@ export function Footer() {
             </a>
             .
           </p>
-          <p>La licencia MIT del código no incluye las marcas ni los logotipos institucionales.</p>
+          <p>
+            El código y la documentación propios se ofrecen bajo una licencia de uso no comercial.
+            El uso comercial requiere autorización previa y por escrito. Las marcas y los logotipos
+            institucionales no están incluidos.
+          </p>
         </div>
       </details>
     </footer>
