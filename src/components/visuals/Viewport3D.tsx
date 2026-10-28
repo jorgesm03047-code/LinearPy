@@ -40,7 +40,7 @@ export function Viewport3D({
     canvas.tabIndex = 0;
     canvas.setAttribute(
       'aria-label',
-      'Escena de los vectores u, v y su producto cruz. Usa las flechas para orbitar y los botones para acercar o restablecer.',
+      'Escena 3D con escala numérica en los ejes y vectores u, v y su producto cruz. Usa las flechas para orbitar y los botones para acercar o restablecer.',
     );
     canvas.setAttribute('role', 'img');
     container.appendChild(canvas);
@@ -52,6 +52,48 @@ export function Viewport3D({
     controls.addEventListener('change', render);
     scene.add(new THREE.GridHelper(extent * 2, 16, 0x426275, 0x253a48));
     scene.add(new THREE.AxesHelper(extent));
+    const rawTickStep = extent / 4;
+    const magnitude = 10 ** Math.floor(Math.log10(rawTickStep));
+    const normalizedStep = rawTickStep / magnitude;
+    const tickStep =
+      (normalizedStep <= 1 ? 1 : normalizedStep <= 2 ? 2 : normalizedStep <= 5 ? 5 : 10) *
+      magnitude;
+    const labelMaterials: THREE.SpriteMaterial[] = [];
+    const label = (text: string, position: THREE.Vector3, color = '#d0dce6') => {
+      const canvas = document.createElement('canvas');
+      canvas.width = 128;
+      canvas.height = 64;
+      const context = canvas.getContext('2d');
+      if (!context) return;
+      context.font = '32px ui-sans-serif, system-ui, sans-serif';
+      context.textAlign = 'center';
+      context.textBaseline = 'middle';
+      context.fillStyle = color;
+      context.fillText(text, canvas.width / 2, canvas.height / 2);
+      const texture = new THREE.CanvasTexture(canvas);
+      const material = new THREE.SpriteMaterial({
+        map: texture,
+        transparent: true,
+        depthTest: false,
+      });
+      labelMaterials.push(material);
+      const sprite = new THREE.Sprite(material);
+      sprite.position.copy(position);
+      sprite.scale.set(tickStep * 0.34, tickStep * 0.17, 1);
+      sprite.renderOrder = 2;
+      scene.add(sprite);
+    };
+    const lastTick = Math.floor(extent / tickStep) * tickStep;
+    for (let tick = -lastTick; tick <= lastTick + tickStep / 2; tick += tickStep) {
+      if (Math.abs(tick) < tickStep / 100) continue;
+      label(String(Number(tick.toPrecision(3))), new THREE.Vector3(tick, -tickStep * 0.16, 0));
+      label(String(Number(tick.toPrecision(3))), new THREE.Vector3(tickStep * 0.16, tick, 0));
+      label(String(Number(tick.toPrecision(3))), new THREE.Vector3(0, -tickStep * 0.16, tick));
+    }
+    label('0', new THREE.Vector3(-tickStep * 0.18, -tickStep * 0.18, 0));
+    label('x', new THREE.Vector3(extent * 1.04, 0, 0), '#70c7ee');
+    label('y', new THREE.Vector3(0, extent * 1.04, 0), '#b8e986');
+    label('z', new THREE.Vector3(0, 0, extent * 1.04), '#f4ad4e');
     const arrow = (values: [number, number, number], color: number) => {
       const vector = new THREE.Vector3(...values);
       const length = vector.length();
@@ -154,6 +196,7 @@ export function Viewport3D({
           materials.forEach((material) => material.dispose());
         }
       });
+      labelMaterials.forEach((material) => material.map?.dispose());
       renderer.dispose();
       canvas.remove();
       action.current = () => {};

@@ -19,144 +19,183 @@ export const TransformCanvas2D: React.FC<TransformCanvas2DProps> = ({ matrix, ra
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    const width = canvas.width;
-    const height = canvas.height;
-    const scale = width / (range * 2);
+    const draw = () => {
+      const bounds = canvas.getBoundingClientRect();
+      if (!bounds.width || !bounds.height) return;
+      const pixelRatio = window.devicePixelRatio || 1;
+      const width = bounds.width;
+      const height = bounds.height;
+      canvas.width = Math.round(width * pixelRatio);
+      canvas.height = Math.round(height * pixelRatio);
+      ctx.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+      const scale = width / (range * 2);
 
-    // Limpiar fondo
-    ctx.fillStyle = '#ffffff';
-    ctx.fillRect(0, 0, width, height);
+      // Limpiar fondo
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, width, height);
 
-    // Transformar coordenadas: el origen (0, 0) al centro de la pantalla
-    const toScreen = (x: number, y: number): [number, number] => [
-      width / 2 + x * scale,
-      height / 2 - y * scale,
-    ];
+      // Transformar coordenadas: el origen (0, 0) al centro de la pantalla
+      const toScreen = (x: number, y: number): [number, number] => [
+        width / 2 + x * scale,
+        height / 2 - y * scale,
+      ];
 
-    // Cuadrícula de fondo
-    ctx.strokeStyle = '#e3e8ed';
-    ctx.lineWidth = 1;
-    for (let i = -range; i <= range; i++) {
-      const [x1, y1] = toScreen(i, -range);
-      const [x2, y2] = toScreen(i, range);
-      ctx.beginPath();
-      ctx.moveTo(x1, y1);
-      ctx.lineTo(x2, y2);
-      ctx.stroke();
-
-      const [hx1, hy1] = toScreen(-range, i);
-      const [hx2, hy2] = toScreen(range, i);
-      ctx.beginPath();
-      ctx.moveTo(hx1, hy1);
-      ctx.lineTo(hx2, hy2);
-      ctx.stroke();
-    }
-
-    // Ejes coordenados principales
-    ctx.strokeStyle = '#003b5d';
-    ctx.lineWidth = 2;
-    const [cx0, cy0] = toScreen(0, -range);
-    const [cx1, cy1] = toScreen(0, range);
-    ctx.beginPath();
-    ctx.moveTo(cx0, cy0);
-    ctx.lineTo(cx1, cy1);
-    ctx.stroke();
-
-    const [rx0, ry0] = toScreen(-range, 0);
-    const [rx1, ry1] = toScreen(range, 0);
-    ctx.beginPath();
-    ctx.moveTo(rx0, ry0);
-    ctx.lineTo(rx1, ry1);
-    ctx.stroke();
-
-    // Cuadrado unitario original (0,0) -> (1,0) -> (1,1) -> (0,1)
-    const squareOriginal = [
-      [0, 0],
-      [1, 0],
-      [1, 1],
-      [0, 1],
-    ];
-
-    ctx.fillStyle = 'rgba(107, 118, 130, 0.15)';
-    ctx.strokeStyle = '#8fa9bb';
-    ctx.lineWidth = 1.5;
-    ctx.beginPath();
-    squareOriginal.forEach(([x, y], idx) => {
-      const [sx, sy] = toScreen(x, y);
-      if (idx === 0) ctx.moveTo(sx, sy);
-      else ctx.lineTo(sx, sy);
-    });
-    ctx.closePath();
-    ctx.fill();
-    ctx.stroke();
-
-    // Cuadrado unitario transformado: T * v
-    const applyT = (x: number, y: number): [number, number] => [
-      matrix[0][0] * x + matrix[0][1] * y,
-      matrix[1][0] * x + matrix[1][1] * y,
-    ];
-
-    const squareTransformed = squareOriginal.map(([x, y]) => applyT(x, y));
-
-    ctx.fillStyle = 'rgba(241, 140, 6, 0.25)';
-    ctx.strokeStyle = '#f18c06';
-    ctx.lineWidth = 2.5;
-    ctx.beginPath();
-    squareTransformed.forEach(([x, y], idx) => {
-      const [sx, sy] = toScreen(x, y);
-      if (idx === 0) ctx.moveTo(sx, sy);
-      else ctx.lineTo(sx, sy);
-    });
-    ctx.closePath();
-    ctx.fill();
-    ctx.stroke();
-
-    // Malla interna de puntos transformados
-    ctx.fillStyle = '#003b5d';
-    for (let gx = 0; gx <= 1; gx += 0.25) {
-      for (let gy = 0; gy <= 1; gy += 0.25) {
-        const [tx, ty] = applyT(gx, gy);
-        const [sx, sy] = toScreen(tx, ty);
+      // Cuadrícula de fondo
+      ctx.strokeStyle = '#e3e8ed';
+      ctx.lineWidth = 1;
+      for (let i = -range; i <= range; i++) {
+        const [x1, y1] = toScreen(i, -range);
+        const [x2, y2] = toScreen(i, range);
         ctx.beginPath();
-        ctx.arc(sx, sy, 2.5, 0, Math.PI * 2);
-        ctx.fill();
+        ctx.moveTo(x1, y1);
+        ctx.lineTo(x2, y2);
+        ctx.stroke();
+
+        const [hx1, hy1] = toScreen(-range, i);
+        const [hx2, hy2] = toScreen(range, i);
+        ctx.beginPath();
+        ctx.moveTo(hx1, hy1);
+        ctx.lineTo(hx2, hy2);
+        ctx.stroke();
       }
-    }
 
-    // Dibujar vectores base transformados T(i) y T(j)
-    const drawArrow = (from: [number, number], to: [number, number], color: string) => {
-      const [fx, fy] = toScreen(from[0], from[1]);
-      const [tx, ty] = toScreen(to[0], to[1]);
-      const headlen = 10;
-      const angle = Math.atan2(ty - fy, tx - fx);
-
-      ctx.strokeStyle = color;
-      ctx.fillStyle = color;
-      ctx.lineWidth = 3;
-
+      // Ejes coordenados principales
+      ctx.strokeStyle = '#003b5d';
+      ctx.lineWidth = 2;
+      const [cx0, cy0] = toScreen(0, -range);
+      const [cx1, cy1] = toScreen(0, range);
       ctx.beginPath();
-      ctx.moveTo(fx, fy);
-      ctx.lineTo(tx, ty);
+      ctx.moveTo(cx0, cy0);
+      ctx.lineTo(cx1, cy1);
       ctx.stroke();
 
+      const [rx0, ry0] = toScreen(-range, 0);
+      const [rx1, ry1] = toScreen(range, 0);
       ctx.beginPath();
-      ctx.moveTo(tx, ty);
-      ctx.lineTo(
-        tx - headlen * Math.cos(angle - Math.PI / 6),
-        ty - headlen * Math.sin(angle - Math.PI / 6),
-      );
-      ctx.lineTo(
-        tx - headlen * Math.cos(angle + Math.PI / 6),
-        ty - headlen * Math.sin(angle + Math.PI / 6),
-      );
+      ctx.moveTo(rx0, ry0);
+      ctx.lineTo(rx1, ry1);
+      ctx.stroke();
+
+      const tickStep = Math.max(1, Math.ceil(range / 6));
+      ctx.fillStyle = '#52616d';
+      ctx.font = '15px ui-sans-serif, system-ui, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'top';
+      for (let i = -range + tickStep; i <= range - tickStep; i += tickStep) {
+        if (i === 0) continue;
+        const [x, axisY] = toScreen(i, 0);
+        ctx.fillText(String(i), x, axisY + 6);
+      }
+      ctx.textAlign = 'right';
+      ctx.textBaseline = 'middle';
+      for (let i = -range + tickStep; i <= range - tickStep; i += tickStep) {
+        if (i === 0) continue;
+        const [axisX, y] = toScreen(0, i);
+        ctx.fillText(String(i), axisX - 6, y);
+      }
+      ctx.textAlign = 'left';
+      ctx.textBaseline = 'top';
+      ctx.fillStyle = '#003b5d';
+      ctx.font = '600 16px ui-sans-serif, system-ui, sans-serif';
+      ctx.fillText('x', width - 18, height / 2 + 7);
+      ctx.fillText('y', width / 2 + 7, 8);
+      ctx.fillStyle = '#52616d';
+      ctx.fillText('0', width / 2 + 5, height / 2 + 5);
+
+      // Cuadrado unitario original (0,0) -> (1,0) -> (1,1) -> (0,1)
+      const squareOriginal = [
+        [0, 0],
+        [1, 0],
+        [1, 1],
+        [0, 1],
+      ];
+
+      ctx.fillStyle = 'rgba(107, 118, 130, 0.15)';
+      ctx.strokeStyle = '#8fa9bb';
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      squareOriginal.forEach(([x, y], idx) => {
+        const [sx, sy] = toScreen(x, y);
+        if (idx === 0) ctx.moveTo(sx, sy);
+        else ctx.lineTo(sx, sy);
+      });
       ctx.closePath();
       ctx.fill();
+      ctx.stroke();
+
+      // Cuadrado unitario transformado: T * v
+      const applyT = (x: number, y: number): [number, number] => [
+        matrix[0][0] * x + matrix[0][1] * y,
+        matrix[1][0] * x + matrix[1][1] * y,
+      ];
+
+      const squareTransformed = squareOriginal.map(([x, y]) => applyT(x, y));
+
+      ctx.fillStyle = 'rgba(241, 140, 6, 0.25)';
+      ctx.strokeStyle = '#f18c06';
+      ctx.lineWidth = 2.5;
+      ctx.beginPath();
+      squareTransformed.forEach(([x, y], idx) => {
+        const [sx, sy] = toScreen(x, y);
+        if (idx === 0) ctx.moveTo(sx, sy);
+        else ctx.lineTo(sx, sy);
+      });
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+
+      // Malla interna de puntos transformados
+      ctx.fillStyle = '#003b5d';
+      for (let gx = 0; gx <= 1; gx += 0.25) {
+        for (let gy = 0; gy <= 1; gy += 0.25) {
+          const [tx, ty] = applyT(gx, gy);
+          const [sx, sy] = toScreen(tx, ty);
+          ctx.beginPath();
+          ctx.arc(sx, sy, 2.5, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+
+      // Dibujar vectores base transformados T(i) y T(j)
+      const drawArrow = (from: [number, number], to: [number, number], color: string) => {
+        const [fx, fy] = toScreen(from[0], from[1]);
+        const [tx, ty] = toScreen(to[0], to[1]);
+        const headlen = 10;
+        const angle = Math.atan2(ty - fy, tx - fx);
+
+        ctx.strokeStyle = color;
+        ctx.fillStyle = color;
+        ctx.lineWidth = 3;
+
+        ctx.beginPath();
+        ctx.moveTo(fx, fy);
+        ctx.lineTo(tx, ty);
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.moveTo(tx, ty);
+        ctx.lineTo(
+          tx - headlen * Math.cos(angle - Math.PI / 6),
+          ty - headlen * Math.sin(angle - Math.PI / 6),
+        );
+        ctx.lineTo(
+          tx - headlen * Math.cos(angle + Math.PI / 6),
+          ty - headlen * Math.sin(angle + Math.PI / 6),
+        );
+        ctx.closePath();
+        ctx.fill();
+      };
+
+      const iHat = applyT(1, 0);
+      const jHat = applyT(0, 1);
+      drawArrow([0, 0], iHat, '#003b5d'); // T(i) en azul oscuro
+      drawArrow([0, 0], jHat, '#f18c06'); // T(j) en naranja
     };
 
-    const iHat = applyT(1, 0);
-    const jHat = applyT(0, 1);
-    drawArrow([0, 0], iHat, '#003b5d'); // T(i) en azul oscuro
-    drawArrow([0, 0], jHat, '#f18c06'); // T(j) en naranja
+    const observer = new ResizeObserver(draw);
+    observer.observe(canvas);
+    draw();
+    return () => observer.disconnect();
   }, [matrix, range]);
 
   return (
@@ -164,7 +203,7 @@ export const TransformCanvas2D: React.FC<TransformCanvas2DProps> = ({ matrix, ra
       <canvas
         ref={canvasRef}
         role="img"
-        aria-label={`Cuadrado unitario y su transformación por la matriz ${matrix
+        aria-label={`Plano cartesiano con escala numérica y cuadrado unitario transformado por la matriz ${matrix
           .flat()
           .map((v) => Number(v.toFixed(3)))
           .join(', ')}`}
